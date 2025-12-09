@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Spring Boot + Vercel Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .response {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .response h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .response p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .info p {
+            color: #1976d2;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Java Spring Boot + Vercel</h1>
+        
+        <div class="info">
+            <p><strong>Note:</strong> This frontend is deployed on Vercel. The Java backend needs to be deployed separately (e.g., on Heroku, Railway, or AWS).</p>
+        </div>
+
+        <div class="input-group">
+            <label for="nameInput">Enter your name:</label>
+            <input type="text" id="nameInput" placeholder="Your name" value="World">
+        </div>
+
+        <button onclick="callAPI()">Call Java API</button>
+        <button onclick="getDataAPI()">Get Data from API</button>
+
+        <div id="response" class="response" style="display:none;">
+            <h3>API Response:</h3>
+            <p id="responseText"></p>
+        </div>
+    </div>
+
+    <script>
+        // Note: Replace this URL with your actual Java API URL after deployment
+        const API_URL = 'http://localhost:8080';
+
+        async function callAPI() {
+            const name = document.getElementById('nameInput').value;
+            const responseDiv = document.getElementById('response');
+            const responseText = document.getElementById('responseText');
+            
+            try {
+                // For demo purposes, show a simulated response
+                responseDiv.style.display = 'block';
+                responseText.innerHTML = `<strong>Hello, ${name}! This is a Java Spring Boot REST API.</strong><br><br>
+                    <em>Note: To connect to the actual Java backend, deploy the Java application from the repository and update the API_URL in the script.</em><br><br>
+                    Java files are located in: <code>src/main/java/com/example/demo/</code>`;
+                
+                // Uncomment below when your Java API is deployed:
+                // const response = await fetch(`${API_URL}/hello?name=${encodeURIComponent(name)}`);
+                // const data = await response.text();
+                // responseText.textContent = data;
+            } catch (error) {
+                responseDiv.style.display = 'block';
+                responseText.innerHTML = `<strong style="color: red;">Error:</strong> ${error.message}<br><br>
+                    Make sure your Java backend is running and the API_URL is correct.`;
+            }
+        }
+
+        async function getDataAPI() {
+            const responseDiv = document.getElementById('response');
+            const responseText = document.getElementById('responseText');
+            
+            try {
+                // Simulated response
+                responseDiv.style.display = 'block';
+                responseText.innerHTML = `<strong>Data Retrieved Successfully!</strong><br><br>
+                    Status: success<br>
+                    Message: Data retrieved successfully<br>
+                    Data: ["item1", "item2", "item3"]<br><br>
+                    <em>This is a simulated response. Deploy the Java backend to get real data.</em>`;
+                
+                // Uncomment when Java API is deployed:
+                // const response = await fetch(`${API_URL}/api/data`);
+                // const data = await response.json();
+                // responseText.innerHTML = `<strong>Status:</strong> ${data.status}<br>
+                //     <strong>Message:</strong> ${data.message}<br>
+                //     <strong>Data:</strong> ${JSON.stringify(data.data)}`;
+            } catch (error) {
+                responseDiv.style.display = 'block';
+                responseText.innerHTML = `<strong style="color: red;">Error:</strong> ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
